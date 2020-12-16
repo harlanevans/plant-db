@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { useState, useEffect } from "react";
+// import PlantPage from './components/PlantPage';
+import PlantContainer from './containers/PlantContainer';
 
 const App = () => {
-    console.log('hit react')
-    return(
-        <div>
-            Hello World
-            <input placeholder='Search for Plants...'/>
-        </div>
-    )
-}
+ 
+
+  return (
+     <PlantContainer/>
+  );
+};
 
 export default App;
