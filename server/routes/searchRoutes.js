@@ -3,11 +3,12 @@ const searchController = require("../controllers/SearchController");
 
 const router = express.Router();
 
-router.get("/search?q=query", searchController.searchFunction, (req, res) => {
-  console.log("SEARCH BAR QUERY COMPLETE", req, res);
-  return res.status(200).json("the search");
+router.post("/search", searchController.searchFunction, (req, res) => {
+  console.log("SEARCH BAR QUERY COMPLETE", res.locals.query);
+  return res.status(200).json(res.locals.query);
 });
 
 // router.get('/all_plants', searchController.allPlants, (req, res) => {
 
 // })
+module.exports = router;

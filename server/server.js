@@ -11,7 +11,8 @@ const app = express();
 
 
 // Add mongo here
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const searchController = require("./controllers/SearchController");
 const mongoDB = "mongodb+srv://harlanevans:Daftpunk1!@cluster0.pqogi.mongodb.net/all_plants?retryWrites=true&w=majority"
 mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true})
 const db = mongoose.connection;
@@ -28,10 +29,7 @@ app.use(express.static("client"));
 app.use("/build", express.static(path.join(__dirname, "../build")));
 
 // search route
-app.get("/api/v1/plants/search?q=query", (req, res, next) => {
-    console.log(req)
-    console.log(res)
-});
+app.use("/api", searchRoutes);
 
 // PLANTS ROUTE
 app.use("/plants", plantRoutes);
