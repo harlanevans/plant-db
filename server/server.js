@@ -3,24 +3,19 @@ const searchRoutes = require("./routes/searchRoutes")
 const path = require("path");
 const express = require("express");
 const app = express();
-// const fetch = require('node-fetch');
-
-// node fetch for plant API
-
-
-
 
 // Add mongo here
 const mongoose = require('mongoose');
-const searchController = require("./controllers/SearchController");
 const mongoDB = "mongodb+srv://harlanevans:Daftpunk1!@cluster0.pqogi.mongodb.net/all_plants?retryWrites=true&w=majority"
 mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true})
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 
 // require routes
-// NOT SURE IF I NEED THIS OR NOT
+// parses any req to be received
+// req.body = undefined here
 app.use(express.json())
+// req.body = defined here
 
 // SAME WITH IS... DO I NEED?
 app.use(express.static("client"));

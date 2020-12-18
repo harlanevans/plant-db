@@ -1,23 +1,34 @@
 import React, { useEffect, useState } from "react";
+import defaultImage from "../assets/images/leaf.jpg";
+import PlantForm from "./PlantForm";
+
 
 const Plant = (props) => {
   const [toggleEdit, setToggleEdit] = useState(false);
-  const [plantName, setPlantName] = useState("");
+  // const [plantName, setPlantName] = useState("");
 
-  useEffect(() => {
-    if (props.name) setPlantName(props.name);
-  }, []);
+  // useEffect(() => {
+  //   if (props.name) setPlantName(props.name);
+  // }, []);
 
-  const editPlant = (id) => {
-      props.handleEdit(id, {id: props.id, name: plantName });
-      setToggleEdit(false)
-  };
+  // const editPlant = (id, plant) => {
+  //     props.handleEdit(id, {...plant});
+  //     setToggleEdit(false)
+  // };
 
   return (
-    <div style={styles.plantBox}>
-      <header style={{padding: '1em 1em 2em'}}>
+    <div className='plant-box'>
+      <header style={{padding: '1em 1em'}}>
         <p>Plant Name: {props.name}</p>
       </header>
+      <section className="plant-img-cont">
+        <img src={props.image || defaultImage} className="plant-image" />
+      </section>
+      <section className="plant-misc">
+        <p className="plant-p">Family: {props.family}</p>
+        <p className="plant-p">Genus: {props.genus}</p>
+        <p className="plant-p">Year Discovered: {props.year}</p>
+      </section>
       <footer className="button-box">
         <button
           onClick={() => props.deletePlant(props._id)}
@@ -29,19 +40,11 @@ const Plant = (props) => {
           className="box-button"
           onClick={() => setToggleEdit(!toggleEdit)}
         >
-          Edit
+          {toggleEdit ? "Cancel" : "Edit"}
         </button>
       </footer>
       {toggleEdit && (
-        <form onSubmit={() => editPlant(props._id)} className="form">
-          <input
-            placeholder="Search for Plants..."
-            value={plantName}
-            onChange={(e) => setPlantName(e.target.value)}
-            className="edit-input"
-          />
-          <button className="form-button" >Submit</button>
-        </form>
+        <PlantForm {...props} toggleEdit={setToggleEdit}/>  
       )}
     </div>
   );
@@ -49,13 +52,3 @@ const Plant = (props) => {
 
 export default Plant;
 
-const styles = {
-  plantBox: {
-    border: "solid 1px rgb(200, 200, 200)",
-    borderRadius: "3px",
-    boxShadow: "2px 2px 5px grey",
-    margin: ".5em",
-    padding: "1em",
-    backgroundColor: "white",
-  },
-};

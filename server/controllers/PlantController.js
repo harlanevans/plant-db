@@ -20,9 +20,9 @@ plantController.createPlant = (req, res, next) => {
     //     // saved!
     // })
     //OR
-    console.log('createPlant request', req.body.newPlant)
-
-    Plant.create({ name: req.body.newPlant }, function (err, newPlant) {
+    console.log('createPlant request', req.body.plant)
+    const { name, family, genus, year, image } = req.body.plant;
+    Plant.create({ name, family, genus, year, image }, function (err, newPlant) {
         if (err) return next("Error in plantsController.createPlants: " + JSON.stringify(err))
         // saved
         res.locals.newPlant = newPlant
@@ -36,7 +36,10 @@ plantController.deletePlant = (req, res, next) => {
     console.log("IN DELETE CONTROLLER", req.params)
     // delete one plants where the _id matches what id was recieved from params
     Plant.deleteOne({ _id: req.params.id }, function (err) {
-        if (err) return next("Error in plantsController.deletePlants: " + JSON.stringify(err))
+        if (err) {
+            res.status(500).send(err)
+            return next("Error in plantsController.deletePlants: " + JSON.stringify(err))
+        }
         // deleted Plant
         return next()
     })
@@ -45,10 +48,11 @@ plantController.deletePlant = (req, res, next) => {
 
 plantController.editPlant = (req, res, next) => {
     console.log('EDIT CONTROLLER MIDDLEWARE', req.params, req.body.plant)
-    Plant.updateOne({ _id: req.params.id }, { name: req.body.plant.name }, function (err) {
+    const { name, genus, family, year, image } = req.body.plant;
+    Plant.updateOne({ _id: req.params.id }, { name, genus, family, year }, function (err) {
         if (err) return next("Error in plantsController.editPlant: " + JSON.stringify(err))
         // updated in DB
-        res.locals.updatedPlant = {_id: req.params.id, name: req.body.plant.name};
+        res.locals.updatedPlant = {_id: req.params.id, name, genus, family, year, image};
         return next()
     })
 }
