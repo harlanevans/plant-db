@@ -97,7 +97,7 @@ const PlantPage = () => {
   return (
     <div style={{ padding: "1em" }}>
       <header className="header">
-        <h1>Plantopia</h1>
+        <h1 style={{fontSize: '3em'}}>Plantopia</h1>
       </header>
       <SearchBar addPlant={addPlant} />
       <br />
